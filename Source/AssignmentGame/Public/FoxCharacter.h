@@ -21,11 +21,23 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Visuals")
 	class UCameraComponent* CameraComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Visuals")
 	class USkeletalMeshComponent* MeshComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Visuals")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
 	int playerCollectibles;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	float currentStamina;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	float maxStamina;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	float staminaDrain;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	float staminaGain;
 
 protected:
 	// Called when the game starts or when spawned

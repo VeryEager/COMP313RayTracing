@@ -12,7 +12,7 @@ AFoxCharacter::AFoxCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	playerCollectibles = 0;
+
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	SpringArmComp->SetupAttachment(RootComponent);
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
@@ -22,6 +22,15 @@ AFoxCharacter::AFoxCharacter()
 
 	BaseTurnRate = 60.0f;
 	BaseLookUpAtRate = 60.0f;
+
+	//Collectible defaults
+	playerCollectibles = 0;
+
+	// Stamina defaults
+	maxStamina = 100.0f;
+	currentStamina = maxStamina;
+	staminaDrain = 5.0f;
+	staminaGain = 2.5f;
 }
 
 // Called when the game starts or when spawned
