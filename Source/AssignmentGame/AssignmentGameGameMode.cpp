@@ -3,6 +3,7 @@
 #include "AssignmentGameGameMode.h"
 #include "AssignmentGameCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
 
 AAssignmentGameGameMode::AAssignmentGameGameMode()
 {
@@ -12,4 +13,27 @@ AAssignmentGameGameMode::AAssignmentGameGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+}
+
+void AAssignmentGameGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+	ChangeMenuWidget(StartingWidgetClass);
+}
+
+void AAssignmentGameGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget> widget)
+{
+    if (CurrentWidget != nullptr)
+    {
+        CurrentWidget->RemoveFromViewport();
+        CurrentWidget = nullptr;
+    }
+    if (widget != nullptr)
+    {
+        CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), widget);
+        if (CurrentWidget != nullptr)
+        {
+            CurrentWidget->AddToViewport();
+        }
+    }
 }
