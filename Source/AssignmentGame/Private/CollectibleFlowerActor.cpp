@@ -12,6 +12,12 @@ ACollectibleFlowerActor::ACollectibleFlowerActor()
 
 	StaticComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	StaticComponent->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> FlowerMeshAsset(TEXT("StaticMesh'/Game/Content/Meadow_Environment_Set/Environment/Foliage/Meshes/SM_flower_common_poppy_02'"));
+	if (FlowerMeshAsset.Object)
+	{
+		StaticComponent->SetStaticMesh(FlowerMeshAsset.Object);
+	}
 }
 
 // Called when the game starts or when spawned

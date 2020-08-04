@@ -2,6 +2,9 @@
 
 
 #include "CollectibleItemSpawner.h"
+#include "TimerManager.h"
+#include "Engine/World.h"
+#include "CollectibleFlowerActor.h"
 
 // Sets default values
 ACollectibleItemSpawner::ACollectibleItemSpawner()
@@ -13,6 +16,12 @@ ACollectibleItemSpawner::ACollectibleItemSpawner()
 	SpawnDelayMin = 4.0f;
 	SpawnDelayMax = 3.0f * SpawnDelayMin;
 
+	RandSpawnDelay = -1;
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> CollectibleItemBlueprint(TEXT("Blueprint'/Game/Content/Flower'"));
+	if (CollectibleItemBlueprint.Object) {
+		FlowerItemBlueprint = (UClass*)CollectibleItemBlueprint.Object->GeneratedClass;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +33,21 @@ void ACollectibleItemSpawner::BeginPlay()
 
 void ACollectibleItemSpawner::SetNextSpawn() 
 {
+	//check to see if we've begun spawning process
+	if (RandSpawnDelay < 0) {
+		RandSpawnDelay = FMath::RandRange(SpawnDelayMin, SpawnDelayMax);
 
+		FTimerHandle TimerHandle;
+
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ACollectibleItemSpawner::RespawnItem, RandSpawnDelay, false);
+	}	
+}
+
+void ACollectibleItemSpawner::RespawnItem()
+{
+	const FActorSpawnParameters SpawnParams;	
+	SpawnedItem = GetWorld()->SpawnActor<ACollectibleFlowerActor>(FlowerItemBlueprint, GetActorLocation(), GetActorRotation(), SpawnParams);
+	RandSpawnDelay = -1;
 }
 
 // Called every frame
@@ -32,5 +55,8 @@ void ACollectibleItemSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (SpawnedItem == NULL) {
+		SetNextSpawn();
+	}
 }
 

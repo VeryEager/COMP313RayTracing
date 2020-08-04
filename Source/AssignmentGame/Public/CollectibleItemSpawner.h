@@ -15,10 +15,10 @@ public:
 	// Sets default values for this actor's properties
 	ACollectibleItemSpawner();
 
-	//the type of item spawned
+	TSubclassOf<class ACollectibleFlowerActor> FlowerItemBlueprint;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Spawn Properties")
-	class AActor* SpawnedItem;
+	//the object of item spawned
+	class ACollectibleFlowerActor* SpawnedItem;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Spawn Properties")
 	float SpawnDelayMin;
@@ -26,7 +26,7 @@ public:
 	float SpawnDelayMax;
 
 	int RandSpawnDelay;
-	int startingSysTime;
+	int64 StartingSysTime;
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,6 +34,9 @@ protected:
 
 	//should be called when the SpawnedItem is removed
 	virtual void SetNextSpawn();
+
+	//Respawns the item into the world
+	virtual void RespawnItem();
 
 public:	
 	// Called every frame
