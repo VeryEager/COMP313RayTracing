@@ -30,7 +30,7 @@ AFoxCharacter::AFoxCharacter()
 	maxStamina = 100.0f;
 	currentStamina = maxStamina;
 	staminaDrain = 1.0f;
-	staminaGain = 0.75f;
+	staminaGain = 0.75*staminaDrain;
 }
 
 // Called when the game starts or when spawned
