@@ -39,7 +39,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
 	float staminaGain;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player Data")
 	int CurrentCollectibles;
 
 protected:
