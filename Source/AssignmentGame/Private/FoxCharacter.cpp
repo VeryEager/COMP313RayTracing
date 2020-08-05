@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "CollectibleFlowerActor.h"
 
 // Sets default values
 AFoxCharacter::AFoxCharacter()
@@ -13,6 +15,7 @@ AFoxCharacter::AFoxCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//define camera & visual components
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	SpringArmComp->SetupAttachment(RootComponent);
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
@@ -20,11 +23,18 @@ AFoxCharacter::AFoxCharacter()
 	MeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	MeshComp->SetupAttachment(RootComponent);
 
+	//define interactive components
+	Trigger = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger"));
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	Trigger->SetupAttachment(RootComponent);
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AFoxCharacter::OnOverlapBegin);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &AFoxCharacter::OnOverlapEnd);
+
+
+
+
 	BaseTurnRate = 60.0f;
 	BaseLookUpAtRate = 60.0f;
-
-	//Collectible defaults
-	playerCollectibles = 0;
 
 	// Stamina defaults
 	maxStamina = 100.0f;
@@ -89,3 +99,17 @@ void AFoxCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AFoxCharacter::LookUpAtRate);
 }
 
+void AFoxCharacter::OnOverlapBegin(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex, 
+	bool bFromSweep, const FHitResult& SweepResult) {
+	if (OtherActor && (OtherActor != this) && OtherActor->IsA(ACollectibleFlowerActor::StaticClass())) {
+		if (GEngine) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Overlapping with flower"));
+		}
+	}
+}
+
+void AFoxCharacter::OnOverlapEnd(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex) {
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("No Overlap"));
+	}
+}

@@ -18,7 +18,8 @@ ACollectibleItemSpawner::ACollectibleItemSpawner()
 
 	RandSpawnDelay = -1;
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> CollectibleItemBlueprint(TEXT("Blueprint'/Game/Content/Flower'"));
+	//this code initializes a Flower Blueprint instead of the CollectibleFlowerActor class.
+	static ConstructorHelpers::FObjectFinder<UBlueprint> CollectibleItemBlueprint(TEXT("Blueprint'/Game/Flower.Flower'"));
 	if (CollectibleItemBlueprint.Object) {
 		FlowerItemBlueprint = (UClass*)CollectibleItemBlueprint.Object->GeneratedClass;
 	}
@@ -46,7 +47,8 @@ void ACollectibleItemSpawner::SetNextSpawn()
 void ACollectibleItemSpawner::RespawnItem()
 {
 	const FActorSpawnParameters SpawnParams;	
-	SpawnedItem = GetWorld()->SpawnActor<ACollectibleFlowerActor>(FlowerItemBlueprint, GetActorLocation(), GetActorRotation(), SpawnParams);
+	//remove "FlowerItemBlueprint" arg for a CollectibleFlowerActor
+	SpawnedItem = GetWorld()->SpawnActor<ACollectibleFlowerActor>(GetActorLocation(), GetActorRotation(), SpawnParams);
 	RandSpawnDelay = -1;
 }
 

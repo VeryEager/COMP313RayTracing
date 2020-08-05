@@ -15,13 +15,16 @@ public:
 	// Sets default values for this actor's properties
 	ACollectibleFlowerActor();
 
+
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Scoring")
 	int AccumulatedScore;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Visuals")
 	class UStaticMeshComponent* StaticComponent;
 	
-
+	UPROPERTY(VisibleAnywhere, Category = "Trigger")
+	class UCapsuleComponent* Trigger;
 
 protected:
 	// Called when the game starts or when spawned

@@ -2,6 +2,7 @@
 
 
 #include "CollectibleFlowerActor.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ACollectibleFlowerActor::ACollectibleFlowerActor()
@@ -10,14 +11,19 @@ ACollectibleFlowerActor::ACollectibleFlowerActor()
 	PrimaryActorTick.bCanEverTick = true;
 	AccumulatedScore = 1;
 
+	//define visual components
 	StaticComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	StaticComponent->SetupAttachment(RootComponent);
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> FlowerMeshAsset(TEXT("StaticMesh'/Game/Content/Meadow_Environment_Set/Environment/Foliage/Meshes/SM_flower_common_poppy_02'"));
+	RootComponent = StaticComponent;
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> FlowerMeshAsset(TEXT("StaticMesh'/Game/Meadow_Environment_Set/Environment/Foliage/Meshes/SM_flower_common_chicory_01.SM_flower_common_chicory_01'"));
 	if (FlowerMeshAsset.Object)
 	{
 		StaticComponent->SetStaticMesh(FlowerMeshAsset.Object);
 	}
+
+	//define interactive components
+	Trigger = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger"));
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	Trigger->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
