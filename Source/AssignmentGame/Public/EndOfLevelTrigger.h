@@ -33,6 +33,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scoring")
 	int RandScore;
 
+	TSubclassOf<UUserWidget> ELWRClass;
+
 
 protected:
 	// Called when the game starts or when spawned
