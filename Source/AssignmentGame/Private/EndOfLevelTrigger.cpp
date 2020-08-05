@@ -78,6 +78,12 @@ void AEndOfLevelTrigger::OnOverlapBegin(UPrimitiveComponent* Overlapped, AActor*
 }
 
 void AEndOfLevelTrigger::OnOverlapEnd(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex) {
-
+	if (OtherActor && (OtherActor != this) && OtherActor->IsA(AFoxCharacter::StaticClass())) {
+		if (CheckPlayerConditions(OtherActor)) {
+			//pause the game
+			APlayerController* const MyPlayer = Cast<APlayerController>(GEngine->GetFirstLocalPlayerController(GetWorld()));
+			MyPlayer->SetPause(true);
+		}
+	}
 }
 
