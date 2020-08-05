@@ -39,6 +39,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
 	float staminaGain;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
+	int CurrentCollectibles;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

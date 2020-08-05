@@ -30,7 +30,7 @@ AFoxCharacter::AFoxCharacter()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AFoxCharacter::OnOverlapBegin);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AFoxCharacter::OnOverlapEnd);
 
-
+	CurrentCollectibles = 0;
 
 
 	BaseTurnRate = 60.0f;
@@ -102,14 +102,12 @@ void AFoxCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void AFoxCharacter::OnOverlapBegin(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex, 
 	bool bFromSweep, const FHitResult& SweepResult) {
 	if (OtherActor && (OtherActor != this) && OtherActor->IsA(ACollectibleFlowerActor::StaticClass())) {
-		if (GEngine) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Overlapping with flower"));
-		}
+
+		CurrentCollectibles += ((ACollectibleFlowerActor*)OtherActor)->AccumulatedScore;
+		OtherActor->Destroy();
 	}
 }
 
 void AFoxCharacter::OnOverlapEnd(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex) {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("No Overlap"));
-	}
+	//don't need to do anything, for now
 }

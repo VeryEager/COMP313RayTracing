@@ -12,7 +12,7 @@ ACollectibleItemSpawner::ACollectibleItemSpawner()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SpawnedItem = NULL;
+	SpawnedItem = nullptr;
 	SpawnDelayMin = 4.0f;
 	SpawnDelayMax = 3.0f * SpawnDelayMin;
 
@@ -57,7 +57,7 @@ void ACollectibleItemSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (SpawnedItem == NULL) {
+	if (SpawnedItem == nullptr || SpawnedItem->IsPendingKillPending()) {
 		SetNextSpawn();
 	}
 }
