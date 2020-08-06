@@ -3,6 +3,8 @@
 
 #include "CollectibleFlowerActor.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
+
 
 // Sets default values
 ACollectibleFlowerActor::ACollectibleFlowerActor()
@@ -24,6 +26,9 @@ ACollectibleFlowerActor::ACollectibleFlowerActor()
 	Trigger = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger"));
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	Trigger->SetupAttachment(RootComponent);
+
+	AudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComp"));
+	AudioComp->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

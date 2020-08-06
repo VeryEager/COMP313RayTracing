@@ -24,6 +24,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
 	class UWidgetComponent* RequirementDisplay;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+	class UAudioComponent* AudioComp;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Scoring")
 	int MinScoreRequired;
 

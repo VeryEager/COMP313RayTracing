@@ -26,6 +26,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Trigger")
 	class UCapsuleComponent* Trigger;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+	class UAudioComponent* AudioComp;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

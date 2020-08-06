@@ -8,6 +8,7 @@
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "CollectibleFlowerActor.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 AFoxCharacter::AFoxCharacter()
@@ -15,13 +16,16 @@ AFoxCharacter::AFoxCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//define camera & visual components
+	//define camera & visual/audio components
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	SpringArmComp->SetupAttachment(RootComponent);
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
 	MeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	MeshComp->SetupAttachment(RootComponent);
+
+	AudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComp"));
+	AudioComp->SetupAttachment(RootComponent);
 
 	//define interactive components
 	Trigger = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger"));

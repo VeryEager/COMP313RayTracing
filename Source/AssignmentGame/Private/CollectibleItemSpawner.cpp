@@ -48,7 +48,7 @@ void ACollectibleItemSpawner::RespawnItem()
 {
 	const FActorSpawnParameters SpawnParams;	
 	//remove "FlowerItemBlueprint" arg for a CollectibleFlowerActor
-	SpawnedItem = GetWorld()->SpawnActor<ACollectibleFlowerActor>(GetActorLocation(), GetActorRotation(), SpawnParams);
+	SpawnedItem = GetWorld()->SpawnActor<ACollectibleFlowerActor>(FlowerItemBlueprint, GetActorLocation(), GetActorRotation(), SpawnParams);
 	RandSpawnDelay = -1;
 }
 

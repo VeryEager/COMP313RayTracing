@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "FoxCharacter.h"
 #include "Components/WidgetComponent.h"
+#include "Components/AudioComponent.h"
+
 
 // Sets default values
 AEndOfLevelTrigger::AEndOfLevelTrigger()
@@ -12,12 +14,15 @@ AEndOfLevelTrigger::AEndOfLevelTrigger()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	//define visual components
+	//define visual/audio components
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	RootComponent = StaticMesh;
 
 	RequirementDisplay = CreateDefaultSubobject<UWidgetComponent>(TEXT("Requirements"));
 	RequirementDisplay->SetupAttachment(RootComponent);
+
+	AudioComp = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComp"));
+	AudioComp->SetupAttachment(RootComponent);
 
 	//define interactive components
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));

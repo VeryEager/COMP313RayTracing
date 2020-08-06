@@ -27,6 +27,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Trigger")
 	class UCapsuleComponent* Trigger;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+	class UAudioComponent* AudioComp;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Player Data")
 	float currentStamina;
 	
