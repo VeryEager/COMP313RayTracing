@@ -31,7 +31,7 @@ AEndOfLevelTrigger::AEndOfLevelTrigger()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AEndOfLevelTrigger::OnOverlapBegin);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AEndOfLevelTrigger::OnOverlapEnd);
 
-	MinScoreRequired = 1;
+	MinScoreRequired = 8;
 	MaxScoreRequired = 2 * MinScoreRequired;
 	RandScore = FMath::RandRange(MinScoreRequired, MaxScoreRequired);
 
@@ -65,7 +65,7 @@ void AEndOfLevelTrigger::OnOverlapBegin(UPrimitiveComponent* Overlapped, AActor*
 
 		//check that the player has enough collectibles to finish the level
 		if (CheckPlayerConditions(OtherActor)) {
-			//then display widget & end game
+			//then display widget & end or restart game
 			UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), ELWRClass);
 
 			Widget->AddToViewport();
@@ -85,7 +85,7 @@ void AEndOfLevelTrigger::OnOverlapBegin(UPrimitiveComponent* Overlapped, AActor*
 void AEndOfLevelTrigger::OnOverlapEnd(UPrimitiveComponent* Overlapped, AActor* OtherActor, UPrimitiveComponent* OtherOverlapped, int32 OtherBodyIndex) {
 	if (OtherActor && (OtherActor != this) && OtherActor->IsA(AFoxCharacter::StaticClass())) {
 		if (CheckPlayerConditions(OtherActor)) {
-			//pause the game
+			//pause the game once it's over
 			APlayerController* const MyPlayer = Cast<APlayerController>(GEngine->GetFirstLocalPlayerController(GetWorld()));
 			MyPlayer->SetPause(true);
 		}
